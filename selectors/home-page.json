@@ -1,6 +1,8 @@
 {
   "desktopDarkLogo": "//a[contains(@class, 'desktop-logo')]/img[contains(@class, 'header__logo-dark')]",
   "copyright": ".copyright",
-  "headerNavBar": ".top-navigation__item-link",
-  "contactUsBtn": ".header__content > [data-gtm-category='header-contact-cta']"
+  "headerNavBarLinks": ".top-navigation__item-link",
+  "contactUsBtn": ".header__content > [data-gtm-category='header-contact-cta']",
+  "hamburgerMenuBtn": ".hamburger-menu__button",
+  "hamburgerFirstLevelLink": ".first-level-link"
 }

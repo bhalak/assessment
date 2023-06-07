@@ -1,5 +1,6 @@
 const homePageSelectors = require('./selectors/home-page.json');
-const contactUsSelectors = require("./selectors/contact-us-page.json")
+const contactUsSelectors = require("./selectors/contact-us-page.json");
+const StringUtils = require("./utils/StringUtils");
 
 const assert = require('assert')
 
@@ -13,8 +14,14 @@ Scenario('test something', async ({ I }) => {
   I.scrollTo(homePageSelectors.copyright);
   I.seeElement(homePageSelectors.copyright);
 
-  const navBarButtons = await I.grabTextFromAll(homePageSelectors.headerNavBar);
-  assert.strictEqual(areStringArraysEqual(expectedNavButtons, navBarButtons), true)
+  // Verify header navigation buttons
+  const navBarButtons = await I.grabTextFromAll(homePageSelectors.headerNavBarLinks);
+  assert.strictEqual(StringUtils.areStringArraysEqual(expectedNavButtons, navBarButtons), true)
+
+  // Verify navigation button in dropdown list
+  I.click(homePageSelectors.hamburgerMenuBtn);
+  const hamburgerNavBarButtons = await I.grabTextFromAll(homePageSelectors.hamburgerFirstLevelLink);
+  assert.strictEqual(StringUtils.areStringArraysEqual(expectedNavButtons, hamburgerNavBarButtons), true)
 
   I.click(homePageSelectors.contactUsBtn);
   
@@ -22,25 +29,6 @@ Scenario('test something', async ({ I }) => {
   assert.strictEqual(phoneNumbers.length !== 0, true);
   
   phoneNumbers.forEach(phoneNumber => {
-    assert.strictEqual(verifyFormat(phoneNumber), true);
+    assert.strictEqual(StringUtils.verifyFormat(phoneNumber), true);
   })
 });
-
-function areStringArraysEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function verifyFormat(inputString) {
-  const pattern = /^\+\d-\d{3}-\d{3}-\d{4}$/;
-  return pattern.test(inputString);
-}
