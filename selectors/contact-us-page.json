@@ -1,0 +1,3 @@
+{
+  "phoneNumbers": ".text + .text p:last-child a"
+}

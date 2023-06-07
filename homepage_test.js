@@ -1,3 +1,6 @@
+const homePageSelectors = require('./selectors/home-page.json');
+const contactUsSelectors = require("./selectors/contact-us-page.json")
+
 const assert = require('assert')
 
 Feature('homepage');
@@ -5,17 +8,17 @@ Feature('homepage');
 Scenario('test something', async ({ I }) => {
   const expectedNavButtons = ['Services', 'Industries', 'Insights', 'About', 'Careers'];
 
-  I.amOnPage('https://www.epam.com/');
-  I.seeElement("//a[contains(@class, 'desktop-logo')]/img[contains(@class, 'header__logo-dark')]");
-  I.scrollTo(".copyright");
-  I.seeElement(".copyright");
+  I.amOnPage('/');
+  I.seeElement(homePageSelectors.desktopDarkLogo);
+  I.scrollTo(homePageSelectors.copyright);
+  I.seeElement(homePageSelectors.copyright);
 
-  const navBarButtons = await I.grabTextFromAll(".top-navigation__item-link");
+  const navBarButtons = await I.grabTextFromAll(homePageSelectors.headerNavBar);
   assert.strictEqual(areStringArraysEqual(expectedNavButtons, navBarButtons), true)
 
-  I.click(".header__content > [data-gtm-category='header-contact-cta']");
+  I.click(homePageSelectors.contactUsBtn);
   
-  const phoneNumbers =  await I.grabTextFromAll(".text + .text p:last-child a");
+  const phoneNumbers =  await I.grabTextFromAll(contactUsSelectors.phoneNumbers);
   assert.strictEqual(phoneNumbers.length !== 0, true);
   
   phoneNumbers.forEach(phoneNumber => {
